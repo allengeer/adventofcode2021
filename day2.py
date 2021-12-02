@@ -10,14 +10,13 @@ def name():
 def solve1():
     instructions = utils.read_file_matrix("inputs/day2_1.txt", dtype=str)
     (x,y,z) = (0,0,0)
-    for instruction in instructions:
-        print(instruction)
-        if instruction[0] == "forward":
-            y += int(instruction[1])
-        elif instruction[0] == "down":
-            z += int(instruction[1])
+    for instruction, amount in instructions:
+        if instruction == "forward":
+            y += int(amount)
+        elif instruction == "down":
+            z += int(amount)
         elif instruction[0] == "up":
-            z -= int(instruction[1])
+            z -= int(amount)
 
     return y*z
 
@@ -25,14 +24,12 @@ def solve1():
 def solve2():
     instructions = utils.read_file_matrix("inputs/day2_1.txt", dtype=str)
     (x, y, z, aim) = (0, 0, 0, 0)
-    for instruction in instructions:
-        print(instruction)
-        if instruction[0] == "forward":
-            y += int(instruction[1])
-            z += aim * int(instruction[1])
-        elif instruction[0] == "down":
-            aim += int(instruction[1])
-        elif instruction[0] == "up":
-            aim -= int(instruction[1])
-
+    for instruction, amount in instructions:
+        if instruction == "forward":
+            y += int(amount)
+            z += aim * int(amount)
+        elif instruction == "down":
+            aim += int(amount)
+        elif instruction == "up":
+            aim -= int(amount)
     return y * z
