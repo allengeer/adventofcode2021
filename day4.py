@@ -31,7 +31,7 @@ def check_card(card):
 
 
 def card_score(number, card):
-    return number * sum([sum(list(map(lambda x: x[0], filter(lambda x: not x[1], row)))) for row in card])
+    return number * sum([sum(map(lambda x: x[0], filter(lambda x: not x[1], row))) for row in card])
 
 
 def solve1():
