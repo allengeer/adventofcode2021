@@ -30,24 +30,40 @@ def solve1():
     return acc
 
 
-def is_basin(bottom_grid, point):
-    return bottom_grid[point[1]][point[0]] < 9
+def in_basins(basins, point):
+    r = False
+    for basin in basins:
+        r = r or in_basin(basin, point)
+    return r
 
 
-def explore_basin(truth_table, bottom_grid, points):
-    if len(points) >= 1:
-        truth_table[points[0][1]][points[0][0]] = is_basin(bottom_grid, points[0])
-        orthogonal_dirs = np.array([np.subtract(points[0], (0, -1)), np.subtract(points[0], (0, 1)), np.subtract(points[0], (-1, 0)),np.subtract(points[0], (1, 0))])
-        valid_points = orthogonal_dirs[list(map(lambda y: valid_coordinate(bottom_grid, y), orthogonal_dirs))]
-        unexplored_points = valid_points[list(map(lambda y: truth_table[y[1]][y[0]], valid_points))]
+def in_basin(basin, point):
+    r = False
+    for p in basin:
+        r = r or (p[0] == point[0] and p[1] == point[1])
+    return r
+
+
+def explore_basin(grid, basin, point):
+    if grid[point[0]][point[1]] < 9:
+        if not in_basin(basin, point):
+            basin.append(point)
+        orthogonal_dirs = [np.subtract(point, (0, -1)), np.subtract(point, (0, 1)), np.subtract(point, (-1, 0)),np.subtract(point, (1, 0))]
+        valid_dirs = list(filter(lambda y: valid_coordinate(grid, y) and not in_basin(basin, y), orthogonal_dirs))
+        for direction in valid_dirs:
+            explore_basin(grid, basin, direction)
 
 
 def solve2():
     bottom = utils.read_file_matrix("inputs/day9_1.txt", dtype=str)
     bottom_grid = np.array([list(map(int, line)) for line in bottom])
-    truth_table = np.zeros(bottom_grid.shape)
-    # acc = 0
-    # for (i, j), element in np.ndenumerate(bottom_grid):
-    #     if not truth_table[j][i]:
-
-    return ""
+    basins = []
+    for (i, j), element in np.ndenumerate(bottom_grid):
+        if not in_basins(basins, [i,j]) and element != 9:
+            basin = []
+            explore_basin(bottom_grid, basin, [i,j])
+            basins.append(basin)
+    x = list(map(len, basins))
+    x.sort()
+    x.reverse()
+    return functools.reduce(operator.mul, x[:3])
