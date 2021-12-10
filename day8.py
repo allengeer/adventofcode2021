@@ -69,6 +69,7 @@ def segments_to_int(reading):
     else:
         return 9
 
+
 def solve1():
     segment_readings = utils.read_file_matrix("inputs/day8_1.txt", dtype=str, delimiter=" ")
     input_readings = [segment_reading[:10] for segment_reading in segment_readings]
