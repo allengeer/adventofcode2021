@@ -3,11 +3,13 @@ import numpy as np
 import math
 import operator
 import sys
+
 np.set_printoptions(threshold=sys.maxsize)
 
 
 def name():
     return "Day 10"
+
 
 opens = ["(", "[", "{", "<"]
 closes = [")", "]", "}", ">"]
@@ -74,6 +76,6 @@ def solve1():
 
 def solve2():
     instructions = utils.read_file_matrix("inputs/day10_1.txt", dtype=str)
-    tt = list(filter(lambda x: x> 0, list(map(score_incomplete, instructions))))
+    tt = list(filter(lambda x: x > 0, list(map(score_incomplete, instructions))))
     tt.sort()
-    return tt[math.floor(len(tt)/2)]
+    return tt[math.floor(len(tt) / 2)]
