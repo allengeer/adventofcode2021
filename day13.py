@@ -14,8 +14,6 @@ def solve1():
     grid = np.zeros((1311,1311), dtype=int)
     for point in points:
         grid[point[1]][point[0]] = 1
-
-
     if folds[0][0] == "x":
         left = grid[:,0:int(folds[0][1])]
         right = np.fliplr(grid[:,(int(folds[0][1]) + 1):(int(folds[0][1]) + 1 + len(left[0]))])
